@@ -1,4 +1,9 @@
 package seal.libs.redux;
 
-public interface DispatchFunction {
+import java.util.function.Consumer;
+
+@FunctionalInterface
+public interface DispatchFunction extends Consumer<Object>
+{
+    void accept(Object action);
 }

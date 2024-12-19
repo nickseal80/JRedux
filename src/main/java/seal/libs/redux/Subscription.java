@@ -1,4 +1,6 @@
 package seal.libs.redux;
 
-public interface Subscription {
+public interface Subscription
+{
+    void unsubscribe();
 }

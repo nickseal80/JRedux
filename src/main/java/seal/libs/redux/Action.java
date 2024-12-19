@@ -1,4 +1,5 @@
 package seal.libs.redux;
 
-public interface Action {
+public interface Action
+{
 }
