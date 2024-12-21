@@ -1,6 +1,5 @@
 package seal.libs.redux.boundingRect.model;
 
-import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
 
 import java.util.HashMap;

@@ -1,10 +1,8 @@
 package seal.libs.redux.boundingRect.model;
 
-import seal.libs.redux.Action;
-
 import java.util.Map;
 
-public class AddCoordinateAction implements Action
+public class AddCoordinateAction
 {
     private final Map<String, Double> coordinate;
 
