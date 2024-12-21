@@ -1,4 +1,4 @@
-package ToDo.model;
+package ToDo.model.actions;
 
 public enum ActionTypes
 {

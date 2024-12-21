@@ -1,6 +1,6 @@
 package seal.libs.redux;
 
-public interface Reducer<S>
+public interface Reducer
 {
-    S reduce(S oldState, Action action);
+    State reduce(State oldState, Action<?> action);
 }

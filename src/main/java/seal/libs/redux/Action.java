@@ -1,16 +1,16 @@
 package seal.libs.redux;
 
-public class Action
+public class Action <T>
 {
-    public Action(Enum<?> type, Object payload)
+    public Action(T type, Object payload)
     {
         this.type = type;
         this.payload = payload;
     }
 
-    private final Enum<?> type;
+    private final T type;
 
-    public Enum<?> getType()
+    public T getType()
     {
         return type;
     }
