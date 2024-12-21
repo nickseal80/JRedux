@@ -12,11 +12,11 @@ import java.util.List;
 public class TODOReducer implements Reducer
 {
     @Override
-    public State reduce(TODOState state, Action<ActionTypes> action)
+    public State reduce(State state, Action<Object> action)
     {
         switch (action.getType()) {
             case ActionTypes.ADD_TODO -> {
-                List<String> oldTodoList = state.getTodoList();
+                List<String> oldTodoList = ((TODOState) state).getTodoList();
                 List<String> newTodoList = new ArrayList<>(oldTodoList);
                 newTodoList.add((String) action.getPayload());
 
