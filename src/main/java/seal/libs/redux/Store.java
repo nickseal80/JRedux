@@ -23,7 +23,6 @@ public class Store
     @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
         State oldState = currentState;
-        System.out.println("oldState: " + oldState);
         State newState = reducer.reduce(this.currentState, (Action<Object>) action);
 
         if (oldState != newState && !oldState.equals(newState)) {

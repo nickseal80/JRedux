@@ -4,11 +4,11 @@ import seal.libs.redux.State;
 
 import java.util.List;
 
-public class TODOState implements State
+public class TodoState implements State
 {
     List<String> todoList;
 
-    public TODOState(List<String> todoList)
+    public TodoState(List<String> todoList)
     {
         this.todoList = todoList;
     }
@@ -25,7 +25,13 @@ public class TODOState implements State
         if (this.todoList.equals(todoList)) {
             return this;
         } else {
-            return new TODOState((List<String>) todoList);
+            return new TodoState((List<String>) todoList);
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.todoList.toString();
     }
 }
