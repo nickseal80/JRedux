@@ -3,27 +3,28 @@ package seal.libs.redux;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Store<S>
+public class Store
 {
-    private S currentState;
-    private Reducer<S> reducer;
-    private final List<Subscriber<S>> subscribers = new ArrayList<>();
+    private State currentState;
+    private Reducer reducer;
+    private final List<Subscriber<State>> subscribers = new ArrayList<>();
 
-    public Store(S initialState, Reducer<S> rootReducer)
+    public Store(State initialState, Reducer rootReducer)
     {
         currentState = initialState;
         reducer = rootReducer;
     }
 
-    public S getState()
+    public State getState()
     {
         return currentState;
     }
 
+    @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
-        S oldState = currentState;
+        State oldState = currentState;
         System.out.println("oldState: " + oldState);
-        S newState = reducer.reduce(this.currentState, (Action) action);
+        State newState = reducer.reduce(this.currentState, (Action<Object>) action);
 
         if (oldState != newState && !oldState.equals(newState)) {
             currentState = newState;
@@ -37,7 +38,7 @@ public class Store<S>
         dispatch.accept(action);
     }
 
-    public Subscription subscribe(Subscriber<S> subscriber)
+    public Subscription subscribe(Subscriber<State> subscriber)
     {
         subscribers.add(subscriber);
 

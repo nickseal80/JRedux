@@ -23,6 +23,14 @@ public class TODOReducer implements Reducer
                 return state.withNew(newTodoList);
             }
 
+            case ActionTypes.DELETE_TODO -> {
+                List<String> oldTodoList = ((TODOState) state).getTodoList();
+                List<String> newTodoList = new ArrayList<>(oldTodoList);
+                newTodoList.removeIf(todo -> todo.equals(action.getPayload()));
+
+                return state.withNew(newTodoList);
+            }
+
             default -> {
                 return state;
             }
