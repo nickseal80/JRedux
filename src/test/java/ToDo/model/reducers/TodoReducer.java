@@ -14,11 +14,11 @@ public class TodoReducer implements Reducer
     @Override
     public State reduce(State state, Action<Object> action)
     {
-        switch (action.getType()) {
+        switch (action.type()) {
             case ActionTypes.ADD_TODO -> {
                 List<String> oldTodoList = ((TodoState) state).getTodoList();
                 List<String> newTodoList = new ArrayList<>(oldTodoList);
-                newTodoList.add((String) action.getPayload());
+                newTodoList.add((String) action.payload());
 
                 return state.withNew(newTodoList);
             }
@@ -26,7 +26,7 @@ public class TodoReducer implements Reducer
             case ActionTypes.DELETE_TODO -> {
                 List<String> oldTodoList = ((TodoState) state).getTodoList();
                 List<String> newTodoList = new ArrayList<>(oldTodoList);
-                newTodoList.removeIf(todo -> todo.equals(action.getPayload()));
+                newTodoList.removeIf(todo -> todo.equals(action.payload()));
 
                 return state.withNew(newTodoList);
             }
