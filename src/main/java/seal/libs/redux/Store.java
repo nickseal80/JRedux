@@ -50,4 +50,9 @@ public class Store
     {
         subscribers.forEach(subscriber -> subscriber.onChange(currentState));
     }
+
+    public static Store create(State initialState, Reducer rootReducer)
+    {
+        return new Store(initialState, rootReducer);
+    }
 }
