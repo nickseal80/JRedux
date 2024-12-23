@@ -5,5 +5,5 @@ package seal.libs.redux;
  */
 public interface State
 {
-    State withNew(Object data);
+//    State withNew(Object data);
 }

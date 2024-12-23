@@ -18,7 +18,6 @@ public class TodoState implements State
         return todoList;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public State withNew(Object todoList)
     {

@@ -20,7 +20,7 @@ public class TodoReducer implements Reducer
                 List<String> newTodoList = new ArrayList<>(oldTodoList);
                 newTodoList.add((String) action.payload());
 
-                return state.withNew(newTodoList);
+                return ((TodoState) state).withNew(newTodoList);
             }
 
             case ActionTypes.DELETE_TODO -> {
@@ -28,7 +28,7 @@ public class TodoReducer implements Reducer
                 List<String> newTodoList = new ArrayList<>(oldTodoList);
                 newTodoList.removeIf(todo -> todo.equals(action.payload()));
 
-                return state.withNew(newTodoList);
+                return ((TodoState) state).withNew(newTodoList);
             }
 
             default -> {

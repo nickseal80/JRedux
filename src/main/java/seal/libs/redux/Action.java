@@ -13,8 +13,8 @@ package seal.libs.redux;
  *
  *
  * @param type описание действия экшена
- * @param payload данные хранилища, над которыми будут производится действия
- * @param <T> тип описания действия экшена. Как правило это String или Enum
+ * @param payload данные хранилища, над которыми будут производиться действия
+ * @param <T> тип описания действия экшена. Как правило, это <code>String</code> или <code>Enum</code>
  */
 public record Action<T>(T type, Object payload)
 {
