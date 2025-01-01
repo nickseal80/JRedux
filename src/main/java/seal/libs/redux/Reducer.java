@@ -1,9 +1,11 @@
 package seal.libs.redux;
 
+import seal.libs.redux.state.StateInterface;
+
 /**
  * Интерфейс редьюссера. Пример реализации представлен в файле readme.md
  */
 public interface Reducer
 {
-    State reduce(State oldState, Action<Object> action);
+    StateInterface reduce(StateInterface oldState, Action<Object> action);
 }

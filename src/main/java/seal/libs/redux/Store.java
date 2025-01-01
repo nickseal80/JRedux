@@ -1,5 +1,7 @@
 package seal.libs.redux;
 
+import seal.libs.redux.state.StateInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +12,17 @@ import java.util.List;
  */
 public class Store
 {
-    private State currentState;
+    private StateInterface currentState;
     private Reducer reducer;
-    private final List<Subscriber<State>> subscribers = new ArrayList<>();
+    private final List<Subscriber<StateInterface>> subscribers = new ArrayList<>();
 
     /**
      * Конструктор
      *
-     * @param initialState исходное состояние сущности @see {@link State}
+     * @param initialState исходное состояние сущности @see {@link StateInterface}
      * @param rootReducer корневой редьюсер, объединяющий частные редьюсеры @see {@link Reducer}
      */
-    private Store(State initialState, Reducer rootReducer)
+    private Store(StateInterface initialState, Reducer rootReducer)
     {
         currentState = initialState;
         reducer = rootReducer;
@@ -29,7 +31,7 @@ public class Store
     /**
      * @return текущее состояние
      */
-    public State getState()
+    public StateInterface getState()
     {
         return currentState;
     }
@@ -40,8 +42,8 @@ public class Store
      */
     @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
-        State oldState = currentState;
-        State newState = reducer.reduce(this.currentState, (Action<Object>) action);
+        StateInterface oldState = currentState;
+        StateInterface newState = reducer.reduce(this.currentState, (Action<Object>) action);
 
         if (oldState != newState && !oldState.equals(newState)) {
             currentState = newState;
@@ -61,7 +63,7 @@ public class Store
      * @param subscriber подписчик @see {@link seal.libs.redux.Subscriber}
      * @return метод отписки
      */
-    public Subscription subscribe(Subscriber<State> subscriber)
+    public Subscription subscribe(Subscriber<StateInterface> subscriber)
     {
         subscribers.add(subscriber);
 
@@ -90,7 +92,7 @@ public class Store
      * между собой никакой связи. Если есть необходимость в зависимостях модулей и их состояний между собой, следует
      * создать одно хранилище с несколькими редьюсерами
      */
-    public static Store create(State initialState, Reducer rootReducer)
+    public static Store create(StateInterface initialState, Reducer rootReducer)
     {
         return new Store(initialState, rootReducer);
     }

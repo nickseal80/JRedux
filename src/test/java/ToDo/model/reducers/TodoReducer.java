@@ -4,7 +4,7 @@ import ToDo.model.TodoState;
 import ToDo.model.actions.ActionTypes;
 import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
-import seal.libs.redux.State;
+import seal.libs.redux.state.StateInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 public class TodoReducer implements Reducer
 {
     @Override
-    public State reduce(State state, Action<Object> action)
+    public StateInterface reduce(StateInterface state, Action<Object> action)
     {
         switch (action.type()) {
             case ActionTypes.ADD_TODO -> {
