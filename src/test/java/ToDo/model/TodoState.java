@@ -1,11 +1,10 @@
 package ToDo.model;
 
-import seal.libs.redux.state.RootStateNode;
-import seal.libs.redux.state.StateInterface;
+import seal.libs.redux.State;
 
 import java.util.List;
 
-public class TodoState implements StateInterface
+public class TodoState implements State
 {
     List<String> todoList;
 
@@ -22,13 +21,18 @@ public class TodoState implements StateInterface
 
     @Override
     @SuppressWarnings("unchecked")
-    public StateInterface withNew(Object todoList)
+    public State withNew(Object todoList)
     {
         if (this.todoList.equals(todoList)) {
             return this;
         } else {
             return new TodoState((List<String>) todoList);
         }
+    }
+
+    @Override
+    public Object getImplementationObject() {
+        return this;
     }
 
     @Override

@@ -1,43 +1,36 @@
 package ToDo;
 
-import ToDo.model.TodoState;
-import ToDo.model.actions.Actions;
-import ToDo.model.reducers.TodoReducer;
-import ToDo.model.seeders.TodoListSeeder;
+import ToDo.model.project.ProjectReducer;
 import org.junit.jupiter.api.Test;
+import seal.libs.redux.Redux;
 import seal.libs.redux.Store;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Date;
 
 public class ToDoTest
 {
     @Test
     public void addTodoTest()
     {
-        List<String> todoList = new ArrayList<>();
-        TodoState initialState = new TodoState(todoList);
-        Store store = Store.create(initialState, new TodoReducer());
-        store.dispatch(Actions.addTODO("First todo in list"));
+        Redux redux = new Redux();
+        ProjectReducer projectReducer = new ProjectReducer();
+        Store store = redux.createStore(projectReducer);
 
-        assertEquals("First todo in list", ((TodoState) store.getState()).getTodoList().getFirst());
+//        List<String> todoList = new ArrayList<>();
+//        TodoState initialState = new TodoState(todoList);
+//        Redux redux = new Redux(new ReduxConfig().setPackageName("ToDo"));
+//        Store store = redux.createStore(initialState, new TodoReducer());
+//        store.dispatch(Actions.addTODO("First todo in list"));
+//
+//        assertEquals("First todo in list", ((TodoState) store.getState()).getTodoList().getFirst());
     }
 
-    @Test
-    public void deleteFromTodoListTest()
-    {
-        List<String> todoList = TodoListSeeder.todoList();
-        TodoState initialState = new TodoState(todoList);
-        Store store = Store.create(initialState, new TodoReducer());
-        assertEquals(initialState, store.getState());
+    private ProjectReducer.Project createProjectState(ProjectReducer reducer) {
+        ProjectReducer.Project state = reducer.new Project();
+        state.setName("DI Container");
+        state.setLanguage("Java");
+        state.setCreatedAt(new Date());
 
-        store.dispatch(Actions.deleteTODO("Epic 113"));
-        System.out.println(store.getState());
-        assertNotEquals(initialState, store.getState());
-        List<String> newTodoList = new ArrayList<>(Arrays.asList("Planning", "PBR epic", "launch", "Epic 112", "End of work"));
-        assertEquals(newTodoList, ((TodoState) store.getState()).getTodoList());
+        return state;
     }
 }

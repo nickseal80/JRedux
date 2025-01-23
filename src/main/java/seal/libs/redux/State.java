@@ -1,9 +1,6 @@
-package seal.libs.redux.state;
+package seal.libs.redux;
 
 /**
  * Интерфейс текущего состояния. Пример реализации представлен в файле readme.md
  */
-public interface StateInterface
-{
-    StateInterface withNew(Object data);
-}
+public interface State {}

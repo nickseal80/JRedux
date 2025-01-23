@@ -2,5 +2,5 @@ package seal.libs.redux;
 
 public interface Subscriber<S>
 {
-    void onChange(S state);
+    void onChange(Action<Object> action, S state);
 }

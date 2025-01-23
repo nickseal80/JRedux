@@ -1,6 +1,8 @@
 package seal.libs.redux;
 
-import seal.libs.redux.state.StateInterface;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import seal.libs.redux.config.ReduxConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,29 +12,29 @@ import java.util.List;
  * Более подробное описания глобального хранилища представлено здесь:
  * <a href="https://redux.js.org/tutorials/fundamentals/part-4-store">Store</a>
  */
-public class Store
-{
-    private StateInterface currentState;
+public class Store {
+    private State currentState;
     private Reducer reducer;
-    private final List<Subscriber<StateInterface>> subscribers = new ArrayList<>();
+    private ReduxConfig config;
+    private final List<Subscriber<State>> subscribers = new ArrayList<>();
 
-    /**
-     * Конструктор
-     *
-     * @param initialState исходное состояние сущности @see {@link StateInterface}
-     * @param rootReducer корневой редьюсер, объединяющий частные редьюсеры @see {@link Reducer}
-     */
-    private Store(StateInterface initialState, Reducer rootReducer)
-    {
+
+    private Store(State initialState, Reducer rootReducer, ReduxConfig config) {
         currentState = initialState;
         reducer = rootReducer;
+        this.config = config;
+    }
+
+    private Store(@NotNull Reducer rootReducer, ReduxConfig config) {
+        currentState = rootReducer.getState();
+        reducer = rootReducer;
+        this.config = config;
     }
 
     /**
      * @return текущее состояние
      */
-    public StateInterface getState()
-    {
+    public State getState() {
         return currentState;
     }
 
@@ -42,18 +44,17 @@ public class Store
      */
     @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
-        StateInterface oldState = currentState;
-        StateInterface newState = reducer.reduce(this.currentState, (Action<Object>) action);
+        State oldState = currentState;
+        State newState = reducer.reduce(this.currentState, (Action<Object>) action);
 
-        if (oldState != newState && !oldState.equals(newState)) {
+        if (!oldState.equals(newState)) {
             currentState = newState;
 
-            notifySubscribers();
+            notifySubscribers((Action<Object>) action);
         }
     };
 
-    public void dispatch(Object action)
-    {
+    public void dispatch(Object action) {
         dispatch.accept(action);
     }
 
@@ -63,37 +64,44 @@ public class Store
      * @param subscriber подписчик @see {@link seal.libs.redux.Subscriber}
      * @return метод отписки
      */
-    public Subscription subscribe(Subscriber<StateInterface> subscriber)
-    {
+    public Subscription subscribe(Subscriber<State> subscriber) {
         subscribers.add(subscriber);
 
-        subscriber.onChange(currentState);
+//        subscriber.onChange(currentState);
 
         return () -> subscribers.remove(subscriber);
+    }
+
+    public void setSubscribers(@NotNull List<Subscriber<State>> subscribers) {
+        this.subscribers.addAll(subscribers);
     }
 
     /**
      * Метод оповещения подписчиков об изменеии состояния хранилища
      */
-    private void notifySubscribers()
-    {
-        subscribers.forEach(subscriber -> subscriber.onChange(currentState));
+    private void notifySubscribers(Action<Object> action) {
+        subscribers.forEach(subscriber -> subscriber.onChange(action, currentState));
     }
 
     /**
      * Статический метод для создания хранилища
      *
      * @param initialState изначальное состояние, принимаемое хранилищем в качестве базового состояния инициализации
-     * @param rootReducer @see <a href="https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers">
-     *                    Redux Fundamentals, Part 3: State, Actions, and Reducers
-     *                    </a>
+     * @param rootReducer  @see <a href="https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers">
+     *                     Redux Fundamentals, Part 3: State, Actions, and Reducers
+     *                     </a>
      * @return новое хранилище.
      * Примечание: количество хранилищ в вашем проекте может быть не ограничено, однако эти хранилища не будут иметь
      * между собой никакой связи. Если есть необходимость в зависимостях модулей и их состояний между собой, следует
      * создать одно хранилище с несколькими редьюсерами
      */
-    public static Store create(StateInterface initialState, Reducer rootReducer)
-    {
-        return new Store(initialState, rootReducer);
+    @Contract("_, _, _ -> new")
+    protected static @NotNull Store create(State initialState, Reducer rootReducer, ReduxConfig config) {
+        return new Store(initialState, rootReducer, config);
+    }
+
+    @Contract("_, _, -> new")
+    protected static @NotNull Store create(Reducer rootReducer, ReduxConfig config) {
+        return new Store(rootReducer, config);
     }
 }
