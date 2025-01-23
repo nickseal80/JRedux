@@ -2,9 +2,6 @@ package seal.libs.redux;
 
 import seal.libs.redux.config.ReduxConfig;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Redux {
     private ReduxConfig config;
     private Store store;
@@ -29,10 +26,16 @@ public class Redux {
         return store;
     }
 
+    @Deprecated
     public Store createStore(State initialState, Reducer rootReducer) {
         Store store = Store.create(initialState, rootReducer, config);
         this.store = store;
 
         return store;
+    }
+
+    public Reducer combineReducer(ReducerContainer ...reducerContainers) {
+
+        return new RootReducer(reducerContainers);
     }
 }

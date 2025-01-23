@@ -18,7 +18,7 @@ public class Store {
     private ReduxConfig config;
     private final List<Subscriber<State>> subscribers = new ArrayList<>();
 
-
+    @Deprecated
     private Store(State initialState, Reducer rootReducer, ReduxConfig config) {
         currentState = initialState;
         reducer = rootReducer;
@@ -95,6 +95,7 @@ public class Store {
      * между собой никакой связи. Если есть необходимость в зависимостях модулей и их состояний между собой, следует
      * создать одно хранилище с несколькими редьюсерами
      */
+    @Deprecated
     @Contract("_, _, _ -> new")
     protected static @NotNull Store create(State initialState, Reducer rootReducer, ReduxConfig config) {
         return new Store(initialState, rootReducer, config);

@@ -18,7 +18,7 @@ public class ProjectReducer implements Reducer {
 
     @Override
     public State getState() {
-        return this.state;
+        return state;
     }
 
     @Override

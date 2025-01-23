@@ -7,7 +7,7 @@ import seal.libs.redux.Action;
 
 import java.util.Date;
 
-public class Actions {
+public class ProjectActions {
     @Contract("_ -> new")
     public static @NotNull Action<ActionTypes> changeName(String name) {
         return new Action<>(ActionTypes.CHANGE_NAME, name);

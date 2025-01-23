@@ -1,28 +1,46 @@
 package ToDo.model.projectList;
 
 import ToDo.model.project.ProjectReducer;
+import ToDo.model.projectList.actions.ActionTypes;
+import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
 import seal.libs.redux.State;
+import seal.libs.redux.annotations.Contract;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Contract(innerState = true)
 public class ProjectListReducer implements Reducer {
+    ProjectList state = new ProjectList();
+
     @Override
     public State getState() {
-        //
+        return state;
     }
 
     @Override
     public void setInitialState(State state) {
-
+        //
     }
 
     @Override
-    public State reduce(Action<Object> action) {
-        return Reducer.super.reduce(action);
+    public State reduce(@NotNull Action<Object> action) {
+        switch (action.type()) {
+            case ActionTypes.ADD_PROJECT -> {
+                state.getProjects().add((ProjectReducer.Project) action.payload());
+                return state;
+            }
+            case ActionTypes.REMOVE_PROJECT -> {
+                state.getProjects().remove((ProjectReducer.Project) action.payload());
+                return state;
+            }
+            default -> {
+                return state;
+            }
+        }
     }
 
 
@@ -48,6 +66,9 @@ public class ProjectListReducer implements Reducer {
         public void setCreatedAt(Date createdAt) {
             this.createdAt = createdAt;
         }
+
+        //___________________
+        public ProjectList() {}
 
 
         @Override

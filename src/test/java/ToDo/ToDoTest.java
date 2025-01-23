@@ -1,9 +1,15 @@
 package ToDo;
 
 import ToDo.model.project.ProjectReducer;
+import ToDo.model.project.actions.ProjectActions;
+import ToDo.model.projectList.ProjectListReducer;
+import ToDo.model.projectList.actions.ProjectListActions;
+import ToDo.model.task.TaskReducer;
+import ToDo.model.task.actions.TaskActions;
 import org.junit.jupiter.api.Test;
-import seal.libs.redux.Redux;
-import seal.libs.redux.Store;
+import seal.libs.redux.*;
+
+
 
 import java.util.Date;
 
@@ -13,24 +19,30 @@ public class ToDoTest
     public void addTodoTest()
     {
         Redux redux = new Redux();
+
+        // creating reducers
+        ProjectListReducer projectListReducer = new ProjectListReducer();
         ProjectReducer projectReducer = new ProjectReducer();
-        Store store = redux.createStore(projectReducer);
+        TaskReducer taskReducer = new TaskReducer();
 
-//        List<String> todoList = new ArrayList<>();
-//        TodoState initialState = new TodoState(todoList);
-//        Redux redux = new Redux(new ReduxConfig().setPackageName("ToDo"));
-//        Store store = redux.createStore(initialState, new TodoReducer());
-//        store.dispatch(Actions.addTODO("First todo in list"));
-//
-//        assertEquals("First todo in list", ((TodoState) store.getState()).getTodoList().getFirst());
-    }
+        Reducer rootReducer = redux.combineReducer(
+                new ReducerContainer("area", projectReducer),
+                new ReducerContainer("project", projectListReducer),
+                new ReducerContainer("task", taskReducer)
+        );
 
-    private ProjectReducer.Project createProjectState(ProjectReducer reducer) {
-        ProjectReducer.Project state = reducer.new Project();
-        state.setName("DI Container");
-        state.setLanguage("Java");
-        state.setCreatedAt(new Date());
+        Store store = redux.createStore(rootReducer);
+        // add task
+        store.dispatch(TaskActions.changeName("Task 1"));
+        store.dispatch(TaskActions.changeDescription("Task 1 такая Task 1"));
+        store.dispatch(TaskActions.changeCreatedAt(new Date()));
 
-        return state;
+        // add project
+        store.dispatch(ProjectActions.changeName("DI container"));
+        store.dispatch(ProjectActions.changeLanguage("java"));
+        store.dispatch(ProjectActions.addTask((TaskReducer.Task) taskReducer.getState()));
+
+        // add project list
+        store.dispatch(ProjectListActions.addProject((ProjectReducer.Project) projectReducer.getState()));
     }
 }
