@@ -1,4 +1,4 @@
-package ToDo.model.project.actions;
+package taskManager.model.project.actions;
 
 public enum ActionTypes {
     CHANGE_NAME,

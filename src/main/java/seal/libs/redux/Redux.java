@@ -34,8 +34,8 @@ public class Redux {
         return store;
     }
 
-    public Reducer combineReducer(ReducerContainer ...reducerContainers) {
+    public Reducer combineReducer(Reducer ...reducers) {
 
-        return new RootReducer(reducerContainers);
+        return new RootReducer(reducers);
     }
 }

@@ -9,11 +9,5 @@ public interface Reducer
 
     void setInitialState(State state);
 
-    default State reduce(State state, Action<Object> action) {
-        return state;
-    }
-
-    default State reduce(Action<Object> action) {
-        return null;
-    }
+    State reduce(Action<Object> action);
 }

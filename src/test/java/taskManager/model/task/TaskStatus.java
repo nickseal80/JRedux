@@ -1,4 +1,4 @@
-package ToDo.model.task;
+package taskManager.model.task;
 
 public enum TaskStatus {
     STATUS_TODO("todo"),

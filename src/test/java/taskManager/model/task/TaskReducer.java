@@ -1,6 +1,7 @@
-package ToDo.model.task;
+package taskManager.model.task;
 
-import ToDo.model.task.actions.ActionTypes;
+import seal.libs.redux.utils.CloneUtil;
+import taskManager.model.task.actions.ActionTypes;
 import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
@@ -27,19 +28,19 @@ public class TaskReducer implements Reducer {
         switch (action.type()) {
             case ActionTypes.CHANGE_NAME -> {
                 state.setName((String) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_DESCRIPTION -> {
                 state.setDescription((String) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_STATUS -> {
                 state.setStatus((String) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_CREATED_AT -> {
                 state.setCreatedAt((Date) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             default -> {
                 return state;
@@ -107,18 +108,6 @@ public class TaskReducer implements Reducer {
             sb.append('}');
 
             return sb.toString();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Task that = (Task) o;
-            if (!Objects.equals(name, that.name)) return false;
-            if (!Objects.equals(description, that.description)) return false;
-
-            return Objects.equals(status, that.status);
         }
 
         @Override

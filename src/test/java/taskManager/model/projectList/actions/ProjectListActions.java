@@ -1,6 +1,6 @@
-package ToDo.model.projectList.actions;
+package taskManager.model.projectList.actions;
 
-import ToDo.model.project.ProjectReducer;
+import taskManager.model.project.ProjectReducer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.Action;

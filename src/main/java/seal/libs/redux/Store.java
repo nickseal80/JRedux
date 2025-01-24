@@ -45,7 +45,10 @@ public class Store {
     @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
         State oldState = currentState;
-        State newState = reducer.reduce(this.currentState, (Action<Object>) action);
+//        System.out.println(currentState);
+
+        State newState = reducer.reduce((Action<Object>) action);
+//        System.out.println(newState);
 
         if (!oldState.equals(newState)) {
             currentState = newState;
@@ -80,6 +83,7 @@ public class Store {
      * Метод оповещения подписчиков об изменеии состояния хранилища
      */
     private void notifySubscribers(Action<Object> action) {
+        System.out.println("notify");
         subscribers.forEach(subscriber -> subscriber.onChange(action, currentState));
     }
 

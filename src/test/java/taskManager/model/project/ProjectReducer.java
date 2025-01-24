@@ -1,7 +1,8 @@
-package ToDo.model.project;
+package taskManager.model.project;
 
-import ToDo.model.project.actions.ActionTypes;
-import ToDo.model.task.TaskReducer;
+import seal.libs.redux.utils.CloneUtil;
+import taskManager.model.project.actions.ActionTypes;
+import taskManager.model.task.TaskReducer;
 import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
@@ -32,28 +33,28 @@ public class ProjectReducer implements Reducer {
             case ActionTypes.CHANGE_NAME -> {
                 state.setName((String) action.payload());
                 state.setUpdatedAt(new Date());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_LANGUAGE -> {
                 state.setLanguage((String) action.payload());
                 state.setUpdatedAt(new Date());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_CREATED_AT -> {
                 state.setCreatedAt((Date) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.CHANGE_UPDATED_AT -> {
                 state.setUpdatedAt((Date) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.ADD_TASK -> {
                 state.getTasks().add((TaskReducer.Task) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.REMOVE_TASK -> {
                 state.getTasks().remove((TaskReducer.Task) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             default -> {
                 return state;
@@ -130,21 +131,11 @@ public class ProjectReducer implements Reducer {
             sb.append(", language: ").append(language).append('\'');
             sb.append(", createdAt: ").append(createdAt).append('\'');
             sb.append(", updatedAt: ").append(updatedAt).append('\'');
-            sb.append(", tasks: ").append(tasks.toString());
+            for (TaskReducer.Task task : tasks) {
+                sb.append(", ").append(task);
+            }
 
             return sb.toString();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Project project = (Project) o;
-            if (!Objects.equals(name, project.name)) return false;
-            if (!Objects.equals(language, project.language)) return false;
-
-            return createdAt.equals(project.createdAt) && updatedAt.equals(project.updatedAt);
         }
 
         @Override

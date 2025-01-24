@@ -1,7 +1,8 @@
-package ToDo.model.projectList;
+package taskManager.model.projectList;
 
-import ToDo.model.project.ProjectReducer;
-import ToDo.model.projectList.actions.ActionTypes;
+import seal.libs.redux.utils.CloneUtil;
+import taskManager.model.project.ProjectReducer;
+import taskManager.model.projectList.actions.ActionTypes;
 import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.Action;
 import seal.libs.redux.Reducer;
@@ -31,11 +32,11 @@ public class ProjectListReducer implements Reducer {
         switch (action.type()) {
             case ActionTypes.ADD_PROJECT -> {
                 state.getProjects().add((ProjectReducer.Project) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             case ActionTypes.REMOVE_PROJECT -> {
                 state.getProjects().remove((ProjectReducer.Project) action.payload());
-                return state;
+                return CloneUtil.deepClone(state);
             }
             default -> {
                 return state;
@@ -81,11 +82,6 @@ public class ProjectListReducer implements Reducer {
             sb.append("CreatedAt: " + createdAt + "\n");
 
             return sb.toString();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            return super.equals(o);
         }
 
         @Override
