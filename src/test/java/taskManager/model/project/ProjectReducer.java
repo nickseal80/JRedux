@@ -9,6 +9,7 @@ import seal.libs.redux.Reducer;
 import seal.libs.redux.State;
 import seal.libs.redux.annotations.Contract;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -109,7 +110,7 @@ public class ProjectReducer implements Reducer {
         }
 
         //___________________
-        private List<TaskReducer.Task> tasks;
+        private List<TaskReducer.Task> tasks = new ArrayList<>();
 
         public List<TaskReducer.Task> getTasks() {
             return tasks;

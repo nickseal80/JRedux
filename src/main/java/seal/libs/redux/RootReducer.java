@@ -2,26 +2,22 @@ package seal.libs.redux;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class RootReducer implements Reducer {
-    InitialState initialState = new InitialState();
+    private InitialState initialState = new InitialState();
+    private ReducerContainer[] reducerContainers;
 
-    public RootReducer(Reducer @NotNull ...reducers ) {
-        initialState.setReducers(List.of(reducers));
-        for (Reducer reducer : reducers) {
-            initialState.states.add(reducer.getState());
+    public RootReducer(ReducerContainer @NotNull ...containers ) {
+        this.reducerContainers = containers.clone();
+        for (ReducerContainer container : containers) {
+            initialState.put(container.getName(), container.getReducer().getState());
         }
     }
 
     @Override
     public State getState() {
-        for (State state : initialState.getStates()) {
-            return state;
-        }
-
-        return null;
+        return initialState;
     }
 
     @Override
@@ -31,34 +27,12 @@ public class RootReducer implements Reducer {
 
     @Override
     public State reduce(Action<Object> action) {
-        for (Reducer reducer : initialState.reducers) {
-            return reducer.reduce(action);
+        for (ReducerContainer container : reducerContainers) {
+            initialState.put(container.getName(), container.getReducer().reduce(action));
         }
 
-        return null;
+        return initialState;
     }
 
-    public class InitialState {
-        //____________________
-        private List<Reducer> reducers = new ArrayList<>();
-
-        public List<Reducer> getReducers() {
-            return reducers;
-        }
-
-        public void setReducers(List<Reducer> reducers) {
-            this.reducers = reducers;
-        }
-
-        //____________________
-        private List<State> states = new ArrayList<>();
-
-        public List<State> getStates() {
-            return states;
-        }
-
-        public void setStates(List<State> states) {
-            this.states = states;
-        }
-    }
+    public class InitialState extends HashMap<String, State> implements State {}
 }
