@@ -1,18 +1,10 @@
 package seal.libs.redux;
 
 /**
- * Record Action представляет экземпляр метода экшнов в стандартной библиотеке Redux
- * <p>
- * Для примера: <br/>
- * <code>
- * public static Action&lt;ActionTypes> addToList(String text) <br/>
- * { <br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;return new Action<>(ActionTypes.ADD_TO_LIST, text); <br/>
- * }
- * </code>
+ * Представляет действие с определенным типом и полезной нагрузкой.
  *
- * @param type    описание действия экшена
- * @param payload данные хранилища, над которыми будут производиться действия
- * @param <T>     тип описания действия экшена. Как правило, это String или Enum
+ * @param <T> Тип действия.
+ * @param type Тип действия.
+ * @param payload Полезная нагрузка, связанная с действием.
  */
 public record Action<T>(T type, Object payload) {}
