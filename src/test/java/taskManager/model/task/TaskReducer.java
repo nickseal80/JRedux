@@ -3,13 +3,12 @@ package taskManager.model.task;
 import seal.libs.redux.utils.CloneUtil;
 import taskManager.model.task.actions.ActionTypes;
 import org.jetbrains.annotations.NotNull;
-import seal.libs.redux.Action;
+import seal.libs.redux.action.Action;
 import seal.libs.redux.Reducer;
 import seal.libs.redux.State;
 import seal.libs.redux.annotations.Contract;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Contract(innerState = true)
 public class TaskReducer implements Reducer {

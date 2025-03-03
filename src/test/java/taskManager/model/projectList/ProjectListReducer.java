@@ -4,7 +4,7 @@ import seal.libs.redux.utils.CloneUtil;
 import taskManager.model.project.ProjectReducer;
 import taskManager.model.projectList.actions.ActionTypes;
 import org.jetbrains.annotations.NotNull;
-import seal.libs.redux.Action;
+import seal.libs.redux.action.Action;
 import seal.libs.redux.Reducer;
 import seal.libs.redux.State;
 import seal.libs.redux.annotations.Contract;

@@ -2,7 +2,7 @@ package taskManager.model.task.actions;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import seal.libs.redux.Action;
+import seal.libs.redux.action.Action;
 
 import java.util.Date;
 

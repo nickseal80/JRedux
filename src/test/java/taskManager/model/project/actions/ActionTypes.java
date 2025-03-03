@@ -1,6 +1,8 @@
 package taskManager.model.project.actions;
 
-public enum ActionTypes {
+import seal.libs.redux.action.ActionType;
+
+public enum ActionTypes implements ActionType {
     CHANGE_NAME,
     CHANGE_LANGUAGE,
     CHANGE_CREATED_AT,

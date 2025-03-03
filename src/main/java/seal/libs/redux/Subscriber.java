@@ -1,5 +1,7 @@
 package seal.libs.redux;
 
+import seal.libs.redux.action.Action;
+
 /**
  * Интерфейс Subscriber предназначен для обработки изменений состояния.
  *

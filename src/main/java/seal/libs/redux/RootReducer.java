@@ -1,6 +1,7 @@
 package seal.libs.redux;
 
 import org.jetbrains.annotations.NotNull;
+import seal.libs.redux.action.Action;
 
 import java.util.HashMap;
 

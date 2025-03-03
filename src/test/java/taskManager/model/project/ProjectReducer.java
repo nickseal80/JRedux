@@ -4,7 +4,7 @@ import seal.libs.redux.utils.CloneUtil;
 import taskManager.model.project.actions.ActionTypes;
 import taskManager.model.task.TaskReducer;
 import org.jetbrains.annotations.NotNull;
-import seal.libs.redux.Action;
+import seal.libs.redux.action.Action;
 import seal.libs.redux.Reducer;
 import seal.libs.redux.State;
 import seal.libs.redux.annotations.Contract;
@@ -12,7 +12,6 @@ import seal.libs.redux.annotations.Contract;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Contract(innerState = true)
 public class ProjectReducer implements Reducer {

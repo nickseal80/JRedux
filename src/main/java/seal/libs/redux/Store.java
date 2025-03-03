@@ -2,6 +2,7 @@ package seal.libs.redux;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import seal.libs.redux.action.Action;
 import seal.libs.redux.config.ReduxConfig;
 
 import java.util.ArrayList;

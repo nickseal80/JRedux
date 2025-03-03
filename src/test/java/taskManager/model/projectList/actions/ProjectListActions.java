@@ -3,7 +3,7 @@ package taskManager.model.projectList.actions;
 import taskManager.model.project.ProjectReducer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import seal.libs.redux.Action;
+import seal.libs.redux.action.Action;
 
 public class ProjectListActions {
     @Contract("_ -> new")
