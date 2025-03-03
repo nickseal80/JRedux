@@ -31,10 +31,16 @@ public class TaskManagerTest {
         store.dispatch(ProjectActions.changeCreatedAt(new Date()));
 
         // create a task
-//        store.dispatch(TaskActions.changeName("Task 1"));
-//        store.dispatch(TaskActions.changeDescription("Task 1 Description"));
-//        store.dispatch(TaskActions.changeStatus(TaskStatus.STATUS_TODO.getStatus()));
-//        store.dispatch(TaskActions.changeCreatedAt(new Date()));
+        store.dispatch(TaskActions.changeName("Task 1"));
+        store.dispatch(TaskActions.changeDescription("Task 1 Description"));
+        store.dispatch(TaskActions.changeStatus(TaskStatus.STATUS_TODO.getStatus()));
+        store.dispatch(TaskActions.changeCreatedAt(new Date()));
+
+        State state = store.getState();
+
+
+        TaskReducer.Task task = (TaskReducer.Task) ((RootReducer.InitialState)state).get("tasks");
+        System.out.println(task);
 
 //        store.dispatch(ProjectActions.addTask((TaskReducer.Task)((RootReducer.InitialState) store.getState()).get("task")));
 
@@ -46,7 +52,6 @@ public class TaskManagerTest {
 
 
 
-
-        System.out.println(store.getState().toString());
+//        System.out.println(store.getState().toString());
     }
 }

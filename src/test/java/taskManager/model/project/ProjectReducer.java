@@ -27,7 +27,7 @@ public class ProjectReducer implements Reducer {
     public void setInitialState(State state) {
         this.state = (Project) state;
     }
-
+    
     @Override
     public State reduce(@NotNull Action<Object> action) {
         switch (action.type()) {
