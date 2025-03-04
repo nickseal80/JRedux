@@ -1,14 +1,11 @@
-package taskManager.model.project.actions;
-
-import seal.libs.redux.action.ActionFactory;
-import seal.libs.redux.action.Action;
+package seal.libs.redux.action;
 
 import java.util.Date;
 
-public class ProjectActions extends ActionFactory<ActionTypes> {
-    public static final ProjectActions INSTANCE = new ProjectActions();
+public class TestedActions extends ActionFactory<ActionTypes> {
+    public static final TestedActions INSTANCE = new TestedActions();
 
-    private ProjectActions() {}
+    private TestedActions() {}
 
     public Action<ActionTypes, String> changeName(String name) {
         return create(ActionTypes.CHANGE_NAME, name);

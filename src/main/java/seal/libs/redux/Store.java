@@ -3,7 +3,8 @@ package seal.libs.redux;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import seal.libs.redux.action.Action;
-import seal.libs.redux.config.ReduxConfig;
+import seal.libs.redux.reducer.Reducer;
+import seal.libs.redux.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +12,17 @@ import java.util.List;
 public class Store {
     private State currentState;
     private Reducer reducer;
-    private ReduxConfig config;
     private final List<Subscriber<State>> subscribers = new ArrayList<>();
 
     @Deprecated
-    private Store(State initialState, Reducer rootReducer, ReduxConfig config) {
+    private Store(State initialState, Reducer rootReducer) {
         currentState = initialState;
         reducer = rootReducer;
-        this.config = config;
     }
 
-    private Store(@NotNull Reducer rootReducer, ReduxConfig config) {
+    Store(@NotNull Reducer rootReducer) {
         currentState = rootReducer.getState();
         reducer = rootReducer;
-        this.config = config;
     }
 
     public State getState() {
@@ -34,12 +32,12 @@ public class Store {
     @SuppressWarnings("unchecked")
     private final DispatchFunction dispatch = action -> {
         State oldState = currentState;
-        State newState = reducer.reduce((Action<Object>) action);
+        State newState = reducer.reduce((Action) action);
 
         if (!oldState.equals(newState)) {
             currentState = newState;
 
-            notifySubscribers((Action<Object>) action);
+            notifySubscribers((Action) action);
         }
     };
 
@@ -57,18 +55,18 @@ public class Store {
         this.subscribers.addAll(subscribers);
     }
 
-    private void notifySubscribers(Action<Object> action) {
+    private void notifySubscribers(Action action) {
         subscribers.forEach(subscriber -> subscriber.onChange(action, currentState));
     }
 
     @Deprecated
-    @Contract("_, _, _ -> new")
-    protected static @NotNull Store create(State initialState, Reducer rootReducer, ReduxConfig config) {
-        return new Store(initialState, rootReducer, config);
+    @Contract("_, _ -> new")
+    protected static @NotNull Store create(State initialState, Reducer rootReducer) {
+        return new Store(initialState, rootReducer);
     }
 
-    @Contract("_, _, -> new")
-    protected static @NotNull Store create(Reducer rootReducer, ReduxConfig config) {
-        return new Store(rootReducer, config);
+    @Contract("_ -> new")
+    protected static @NotNull Store create(Reducer rootReducer) {
+        return new Store(rootReducer);
     }
 }

@@ -1,6 +1,4 @@
-package taskManager.model.project.actions;
-
-import seal.libs.redux.action.ActionType;
+package seal.libs.redux.action;
 
 public enum ActionTypes implements ActionType {
     CHANGE_NAME,
