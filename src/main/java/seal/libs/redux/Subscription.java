@@ -1,10 +1,13 @@
 package seal.libs.redux;
 
 /**
- * Интерфейс Subscription представляет собой контракт для управления подписками.
- * Он определяет метод для отмены подписки.
+ * A subscription interface used to unsubscribe from notifications or updates.
  */
 public interface Subscription
 {
+
+    /**
+     * Unsubscribes from the subscription, preventing further updates from being received.
+     */
     void unsubscribe();
 }

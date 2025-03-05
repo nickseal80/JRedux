@@ -1,21 +1,21 @@
 package seal.libs.redux;
 
-import java.util.function.Consumer;
+import seal.libs.redux.action.Action;
+import seal.libs.redux.action.ActionType;
 
 /**
- * Интерфейс DispatchFunction представляет собой функциональный интерфейс,
- * который расширяет интерфейс Consumer. Он предназначен для обработки
- * объектов действия, принимая их в качестве аргумента.
- * <p>
- * Этот интерфейс позволяет реализовать логику обработки действий
- * в виде лямбда-выражений или ссылок на методы, что упрощает
- * работу с функциональным программированием в Java.
- * <p>
- * Метод accept принимает объект действия и выполняет с ним
- * заданные операции.
+ * A functional interface representing a function that accepts an action and dispatches it.
+ * This is used for dispatching actions to the store.
+ *
+ * @param <E> The type of the action type, extending {@link Enum} and {@link ActionType}.
  */
 @FunctionalInterface
-public interface DispatchFunction extends Consumer<Object>
+public interface DispatchFunction<E extends Enum<E> & ActionType>
 {
-    void accept(Object action);
+    /**
+     * Dispatches the given action to the store.
+     *
+     * @param action The action to be dispatched.
+     */
+    void accept(Action<E, ?> action);
 }
