@@ -28,7 +28,7 @@ public class Store <E extends Enum<E> & ActionType> {
      *
      * @param rootReducer The root reducer responsible for reducing the state based on actions.
      */
-    Store(@NotNull Reducer<E> rootReducer) {
+    public Store(@NotNull Reducer<E> rootReducer) {
         this.reducer = rootReducer;
         this.currentState = rootReducer.getState();
     }
