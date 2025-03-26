@@ -63,6 +63,20 @@ Define actions using the `Action` record.
 Action<MyActionType, Integer> incrementAction = new Action<>(MyActionType.INCREMENT, 1);
 Action<MyActionType, Integer> decrementAction = new Action<>(MyActionType.DECREMENT, 1);
 ```
+Or use the ActionFactory.
+```java
+public class Actions extends ActionFactory<ActionTypes> {
+    public static final Actions INSTANCE = new Actions();
+
+    public Action<ActionTypes, Integer> incrementAction() {
+        return create(MyActionType.INCREMENT, 1);
+    }
+
+    public Action<ActionTypes, Integer> incrementAction() {
+        return create(MyActionType.DECREMENT, 1);
+    }
+}
+```
 
 #### Step 3: Create Reducers
 Create reducers for your application state.
