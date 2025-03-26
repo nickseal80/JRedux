@@ -65,14 +65,14 @@ Action<MyActionType, Integer> decrementAction = new Action<>(MyActionType.DECREM
 ```
 Or use the ActionFactory.
 ```java
-public class Actions extends ActionFactory<ActionTypes> {
+public class Actions extends ActionFactory<MyActionType> {
     public static final Actions INSTANCE = new Actions();
 
-    public Action<ActionTypes, Integer> incrementAction() {
+    public Action<MyActionType, Integer> incrementAction() {
         return create(MyActionType.INCREMENT, 1);
     }
 
-    public Action<ActionTypes, Integer> incrementAction() {
+    public Action<MyActionType, Integer> incrementAction() {
         return create(MyActionType.DECREMENT, 1);
     }
 }
