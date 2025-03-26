@@ -63,7 +63,7 @@ Define actions using the `Action` record.
 Action<MyActionType, Integer> incrementAction = new Action<>(MyActionType.INCREMENT, 1);
 Action<MyActionType, Integer> decrementAction = new Action<>(MyActionType.DECREMENT, 1);
 ```
-Or use the ActionFactory.
+Or use an ActionFactory.
 ```java
 public class Actions extends ActionFactory<MyActionType> {
     public static final Actions INSTANCE = new Actions();
