@@ -1,6 +1,8 @@
 package seal.libs.redux.store;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import seal.libs.redux.action.ActionType;
 import seal.libs.redux.reducer.Reducer;
 
@@ -27,6 +29,24 @@ public class StoreFactory {
             instance = new Store<>(reducer);
         }
         return (Store<E>) instance; // Cast safely because of the singleton
+    }
+
+    /**
+     * Retrieves the existing singleton store instance, if it has been created.
+     * If the store has not been initialized, this method will throw a {@link RuntimeException}.
+     *
+     * @param <E> The type of the action type, extending {@link Enum} and {@link ActionType}.
+     * @return The singleton store instance, or throws a {@link RuntimeException} if the store was not created.
+     * @throws RuntimeException if the store has not been initialized using {@link #getOrCreateStore(Reducer)}.
+     */
+    @Contract(pure = true)
+    @SuppressWarnings("unchecked")
+    public static <E extends Enum<E> & ActionType> @Nullable Store<E> getStore() {
+        if (instance != null) {
+            return (Store<E>) instance;
+        }
+
+        throw new RuntimeException("Store was not created");
     }
 
     /**
